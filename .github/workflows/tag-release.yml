@@ -21,6 +21,13 @@ on:
         options:
           - 'true'
           - 'false'
+
+# Serialize with the scheduled Docker image refresh — both workflows push
+# to the same Docker Hub tags and must not race on apache/superset:latest.
+concurrency:
+  group: docker-publish-latest-release
+  cancel-in-progress: false
+
 jobs:
   config:
     runs-on: ubuntu-24.04
